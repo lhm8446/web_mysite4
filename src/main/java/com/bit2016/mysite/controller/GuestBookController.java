@@ -8,18 +8,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bit2016.mysite.service.GuestBookService;
 import com.bit2016.mysite.vo.GuestBookVo;
 
 @Controller
+@RequestMapping("/guestbook")
 public class GuestBookController {
 	
 	@Autowired
 	private GuestBookService guestBookService;
 	
-	@RequestMapping("/guestbook")
+	@RequestMapping("")
 	public String list(Model model){
 		List<GuestBookVo> list = guestBookService.getList();
 		model.addAttribute("list",list);
@@ -32,17 +32,16 @@ public class GuestBookController {
 		return "redirect:/guestbook";
 	}
 	
-	@RequestMapping("guestbook/deleteform/{no}")
+	@RequestMapping("/deleteform/{no}")
 	public String deleteForm(@PathVariable("no")Long no, Model model){
 		model.addAttribute("no",no);
 		return "guestbook/deleteform";
 	}
 	
-	@RequestMapping("guestbook/delete")
-	public String delete(@RequestParam(value= "no", required=true, defaultValue = "")Long no,
-						 @RequestParam(value="password", required=true, defaultValue="")String password){
+	@RequestMapping("/delete")
+	public String delete(@ModelAttribute GuestBookVo vo){
 		
-		guestBookService.delete(no, password);
+		guestBookService.delete(vo);
 		
 		return "redirect:/guestbook";	
 	}

@@ -23,7 +23,7 @@ public class GuestBookService {
 		guestBookDao.insert(vo);
 	}
 	
-	public void delete(Long no, String password){
-		guestBookDao.delete(no, password);
+	public void delete(GuestBookVo vo){
+		guestBookDao.delete(vo);
 	}
 }
