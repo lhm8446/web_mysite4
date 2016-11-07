@@ -105,4 +105,11 @@ public class UserController {
 		
 		return "redirect:/user/modifyform?update=success";
 	}
+	
+//	@ExceptionHandler(UserDaoException.class)
+//	public String handlerUserDaoException(){
+//		// 1. logging (파일에 내용 저장)
+//		// 2. 사용자에게 안내(error) 페이지
+//		return "error/500";
+//	}
 }

@@ -1,32 +1,23 @@
 package com.bit2016.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.bit2016.mysite.exception.UserDaoException;
 import com.bit2016.mysite.vo.UserVo;
 
 @Repository
 public class UserDao {
-	private Connection getConnection() throws SQLException{
-		Connection conn = null;
-		
-		try {
-			Class.forName( "oracle.jdbc.driver.OracleDriver" );
-			
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			conn = DriverManager.getConnection( url, "webdb", "webdb" );
-			
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩실패 : " + e);
-		}
-		
-		return conn;
-	}
+	
+	@Autowired
+	private DataSource dataSource;
 	
 	// 로그인
 	public UserVo get(Long no){
@@ -35,7 +26,7 @@ public class UserDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			
 			String sql = "select no,name,email,password,gender from users where no = ?";
 			
@@ -87,7 +78,7 @@ public class UserDao {
 		ResultSet rs = null;
 		
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			
 			String sql = "select no, email, name from users where email = ? ";
 			
@@ -128,13 +119,13 @@ public class UserDao {
 	}
 	
 	// 사용자 가져오기
-	public UserVo get(String email, String password){
+	public UserVo get(String email, String password) throws UserDaoException{
 		UserVo vo = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			
 			String sql = "select no,name from users where email = ? and password = ?";
 			
@@ -155,7 +146,7 @@ public class UserDao {
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("error : " + e);
+			throw new UserDaoException();
 		} finally{
 			try{
 				if(rs !=null){
@@ -177,7 +168,7 @@ public class UserDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			String sql = "update users set name = ?,password = ?,gender = ? where no = ?";
 			pstmt = conn.prepareStatement(sql);
 			
@@ -208,7 +199,8 @@ public class UserDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
+			
 			String sql = "insert INTO USERS VALUES(user_seq.nextval , ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			

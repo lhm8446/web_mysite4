@@ -17,7 +17,8 @@ public class UserService {
 	}
 	
 	public UserVo login(String email, String password){
-		UserVo userVo = userDao.get(email, password);
+		UserVo userVo = null;
+		userVo = userDao.get(email, password);
 		return userVo;
 	}
 	
