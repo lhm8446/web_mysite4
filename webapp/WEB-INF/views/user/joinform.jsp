@@ -69,7 +69,7 @@ $(function(){
 		  return;
 	  }
 	  $.ajax({
-		 url:"${pageContext.request.contextPath }/api/user?a=chkemail&email="+email,
+		 url:"${pageContext.request.contextPath }/user/api/checkemail?email="+email,
 		 type:"get",
 		 dataType: "json",
 		 data:"",

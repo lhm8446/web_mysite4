@@ -29,7 +29,7 @@
 					"<td>" + vo.name + "</td>"+ 
 					"<td>" + vo.reg_date + "</td>" +
 					"<td><a href ='' data-id="+vo.no+">삭제</a></td>"+
-				    "</tr>" + "<tr>" + "<td colspan=4>" + vo.content + "</td>"+
+				    "</tr>" + "<tr>" + "<td colspan=4>" + vo.content.replace( /\n/gi, "<br>") + "</td>"+
 				    "</tr>" + "</table>" + "<br>" + "</li>";
 
 		if (where == "prepend") {
@@ -43,10 +43,8 @@
 			return;
 		}
 		++page;
-		$
-				.ajax({
-					url : "${pageContext.request.contextPath }/api/guestbook?a=ajax-list&p="
-							+ page,
+				$.ajax({
+					url : "${pageContext.request.contextPath }/guestbook/api/list?p="+ page,
 					type : "get",
 					dataType : "json",
 					success : function(response) {
@@ -58,7 +56,6 @@
 
 						// redering
 						$(response.data).each(function(index, vo) {
-							var htmls =
 
 							render(vo, "append");
 
@@ -84,6 +81,7 @@
 			no= $(this).data("id");
 			
 			event.preventDefault();
+			
 			console.log(no);
 			
 			dialog = $("#dialog").dialog({
@@ -100,10 +98,10 @@
 			        "삭제": function() {
 			
 			        					$.ajax({
-										url : "${pageContext.request.contextPath }/api/guestbook",
+										url : "${pageContext.request.contextPath }/guestbook/api",
 										type : "post",
 										dataType : "json",
-										data : "a=ajax-delete"+
+										data : "/ajax-delete"+
 												"&no="+no+
 												"&pass="+$("#pass1").val(),
 												
@@ -222,7 +220,7 @@
 		</c:import>
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
-	<div id="dialog" title="삭제">
+	<div id="dialog" title="삭제" style="display:none">
 		<br>
 		<p>삭제하시겠습니까</p>
 		<br>

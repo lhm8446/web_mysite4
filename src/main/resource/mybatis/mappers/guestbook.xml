@@ -16,9 +16,26 @@ select no,
 ]]>
 </select>
 
-<insert id="insert" parameterType="guestbookvo">
+<select id="getListByPage" parameterType='integer' resultType="guestbookvo">
 <![CDATA[
-insert into guestbook values (guestbook_seq.nextval, #{name } , #{content }, #{password } ,sysdate)
+select * from(select a.*, rownum rn 
+							from (select no, 
+										 name, 
+										 content, 
+										 password, 
+										 to_char(reg_date,'yyyy-mm-dd hh:mi:ss') as reg_date
+									from guestbook 
+									order by reg_date desc )a)
+		 where (#{page }-1)*5+1 <= rn and rn <= #{page }*5
+]]>
+</select>
+
+<insert id="insert" parameterType="guestbookvo">
+	<selectKey keyProperty="no" resultType="long" order="BEFORE">
+		select guestbook_seq.nextval from dual
+	</selectKey>
+<![CDATA[
+insert into guestbook values (#{no }, #{name } , #{content }, #{password } ,sysdate)
 ]]>
 </insert>
 

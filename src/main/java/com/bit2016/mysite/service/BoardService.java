@@ -16,11 +16,11 @@ public class BoardService {
 	private static final int LIST_SIZE = 5; //리스팅되는 게시물의 수
 	private static final int PAGE_SIZE = 5; //페이지 리스트의 페이지 수
 	
-	
 	@Autowired
 	private BoardDao boardDao;
 	
 	public Map<String, Object> getList(int currentPage, String keyword){
+
 		
 		// 1. 페이징을 위한 기본 데이터 계산
 		int totalPost = boardDao.getTotalCount(keyword); // 전체 게시물 카운트 
@@ -62,5 +62,16 @@ public class BoardService {
 				map.put( "keyword", keyword );
 				
 				return map;
+	}
+
+	public BoardVo get(Long boardNo){
+		
+		BoardVo vo = boardDao.get(boardNo);
+		
+		return vo;
+	}
+	
+	public void insert(BoardVo vo){
+		boardDao.insert(vo);
 	}
 }
