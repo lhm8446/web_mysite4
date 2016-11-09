@@ -251,7 +251,7 @@ public class BoardDao {
 		return vo;
 	}	
 	
-	public List<BoardVo> getList(String keyword, Integer page, Integer size){
+	public List<BoardVo> getList(Integer page, Integer size){
 		
 		List<BoardVo> list = new ArrayList<BoardVo>();
 		
@@ -262,7 +262,6 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 			
-			if( "".equals( keyword ) ) {
 				String sql = 
 					" select * " +
 					"   from ( select no, title, hit, reg_date, depth, name, users_no, rownum as rn" +
@@ -277,26 +276,7 @@ public class BoardDao {
 				pstmt.setInt( 2, size );
 				pstmt.setInt( 3, page );
 				pstmt.setInt( 4, size );
-			} else {
-				String sql = 
-					" select * " +
-					"   from ( select no, title, hit, reg_date, depth, name, users_no, rownum as rn" +
-					"            from(  select a.no, a.title, a.hit, to_char(a.reg_date, 'yyyy-mm-dd hh24:mi:ss') as reg_date, a.depth, b.name, a.users_no" +
-					"                     from board a, users b" +
-					"                    where a.users_no = b.no" +
-					"                      and (title like ? or content like ?)" + 
-					"                 order by group_no desc, order_no asc ))" +
-					"  where (?-1)*?+1 <= rn and rn <= ?*?";
-				pstmt = conn.prepareStatement(sql);
 
-				pstmt.setString( 1, "%" + keyword + "%" );
-				pstmt.setString( 2, "%" + keyword + "%" );
-				pstmt.setInt( 3, page );
-				pstmt.setInt( 4, size );
-				pstmt.setInt( 5, page );
-				pstmt.setInt( 6, size );
-			}
-			
 			rs = pstmt.executeQuery();
 			
 			while( rs.next() ) {

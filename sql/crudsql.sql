@@ -47,19 +47,22 @@ select * from (select no, title, hit, reg_date, depth, name, users_no, rownum as
 					   where a.users_no = b.no
 -- and title like '%kwd%' or content like '%kwd%'
 					order by GROUP_NO desc, order_no asc))
-					where (1-1)*1+1 <= rn and rn <= 1*1;
+					where (1-1)*5+1 <= rn and rn <= 1*5;
 					
+select * from board;
 select * from guestbook where no = 65;
 -- 새로운 글
-insert into board values(board_seq.nextval, '안녕', '안녕', sysdate, 0, nvl((select max(group_no) from board),0)+1 , 1, 0 ,2);
+insert into board values(board_seq.nextval, '첫번째글', '안녕하세여', sysdate, 0, nvl((select max(group_no) from board),0)+1 , 1, 0 ,1);
 
-insert into board values(board_seq.nextval, '점심 뭐', '냉무', sysdate, 0, nvl((select max(group_no) from board),0)+1 , 1, 0 ,2);
+insert into board values(board_seq.nextval, '두번째글', '냉무', sysdate, 0, nvl((select max(group_no) from board),0)+1 , 1, 0 ,1);
 
-insert into board values(board_seq.nextval, '배고프다 그만', '냉무', sysdate, 0, nvl((select max(group_no) from board),0)+1 , 1, 0 ,2);
+insert into board values(board_seq.nextval, '배고프다 그만', '냉무', sysdate, 0, nvl((select max(group_no) from board),0)+1 , 1, 0 ,1);
 
 -- 답글
 update board set order_no = order_no +1 where group_no = 2 and order_no > 1;  --부모 글 순서
 
-insert into board values(board_seq.nextval, '짬뽕싫어', '냉무', sysdate, 0, 2, -- 부모글의 그룹--  2, -- 부모글 순서 +1--  1, -- 부모글 깊이 +1-	   2);
-
+insert into board values(board_seq.nextval, '답글1', '냉무', sysdate, 0, 2,  --부모글의 그룹
+																	   2,  --부모글 순서 +1 
+																	   1,  --부모글 깊이 +1
+																	   1);
 

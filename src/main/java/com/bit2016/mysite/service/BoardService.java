@@ -19,7 +19,11 @@ public class BoardService {
 	@Autowired
 	private BoardDao boardDao;
 	
-//	public Map<String, Object> getList(int currentPage, String keyword){
+	public List<BoardVo> getList(){
+		List<BoardVo> list = boardDao.getList(1, LIST_SIZE);
+		return list;
+	}
+	//	public Map<String, Object> getList(int currentPage, String keyword){
 //
 //		
 //		// 1. 페이징을 위한 기본 데이터 계산
