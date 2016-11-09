@@ -11,12 +11,9 @@
 </head>
 <body>
 
- <h1>
- Ooooops</h1>
+ <h1>error</h1>
  
- <p> error 
- ${exMessage}
- </p>
+ <p> ${exMessage} </p>
 
 </body>
 </html>

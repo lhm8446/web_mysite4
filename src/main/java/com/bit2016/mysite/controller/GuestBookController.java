@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bit2016.mysite.service.GuestBookService;
 import com.bit2016.mysite.vo.GuestBookVo;
+import com.bit2016.security.Auth;
 
 @Controller
 @RequestMapping("/guestbook")
@@ -38,6 +39,7 @@ public class GuestBookController {
 		return "guestbook/deleteform";
 	}
 	
+	@Auth
 	@RequestMapping("/delete")
 	public String delete(@ModelAttribute GuestBookVo vo){
 		

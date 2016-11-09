@@ -2,20 +2,20 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd"
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
 	xmlns:mvc="http://www.springframework.org/schema/mvc">
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
+	
 		<mvc:message-converters>
-		
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
-						<value>text/html; charset=UTF-8</value>
+					<value>text/html; charset=UTF-8</value>
 					</list>
 				</property>
 			</bean>
@@ -23,12 +23,18 @@
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
-						<value>application/json; charset=UTF-8</value>
+					<value>application/json; charset=UTF-8</value>
 					</list>
 				</property>
 			</bean>
-			
 		</mvc:message-converters>
+
+		<!-- argument resolver -->
+		<mvc:argument-resolvers>
+			<bean
+				class="com.bit2016.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+		
 	</mvc:annotation-driven>
 
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 햔들러 -->
@@ -50,5 +56,32 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1" />
 	</bean>
+
+	<!-- Interceptors -->
+	<mvc:interceptors>
+
+		<!-- <mvc:interceptor> <mvc:mapping path="/board/**" /> <bean class="com.bit2016.mysite.interceptor.MyInterceptor2"/> 
+			</mvc:interceptor> -->
+
+		<mvc:interceptor>
+			<mvc:mapping path="/user/login" />
+			<bean class="com.bit2016.security.AuthurLoginInterceptor" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/user/logout" />
+			<bean class="com.bit2016.security.AuthurLogoutInterceptor" />
+		</mvc:interceptor>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/user/login" />        <!-- 스프링 버젼체크 -->
+			<mvc:exclude-mapping path="/user/logout" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<bean class="com.bit2016.security.AuthInterceptor" />
+		</mvc:interceptor>
+
+	</mvc:interceptors>
+
 
 </beans>

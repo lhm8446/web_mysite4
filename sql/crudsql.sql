@@ -47,9 +47,8 @@ select * from (select no, title, hit, reg_date, depth, name, users_no, rownum as
 					   where a.users_no = b.no
 -- and title like '%kwd%' or content like '%kwd%'
 					order by GROUP_NO desc, order_no asc))
-
-where (1-1)*5+1 <= rn and rn <= 1*5;
-
+					where (1-1)*1+1 <= rn and rn <= 1*1;
+					
 select * from guestbook where no = 65;
 -- 새로운 글
 insert into board values(board_seq.nextval, '안녕', '안녕', sysdate, 0, nvl((select max(group_no) from board),0)+1 , 1, 0 ,2);

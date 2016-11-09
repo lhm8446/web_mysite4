@@ -10,9 +10,8 @@
 <title>Insert title here</title>
 </head>
 <body>
- <h1>
- Ooooops</h1>
+ <h1>Error</h1>
  
- <p> error </p>
+ <p> ${exMessage} </p>
 </body>
 </html>
