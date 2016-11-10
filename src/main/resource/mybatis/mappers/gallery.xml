@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gallery">
+
+<select id="getList" resultType="galleryvo">
+<![CDATA[
+select no, org_file_name as orgFileName, 
+		   save_file_name as saveFileName, 
+		   comments, ext_name as extName , 
+		   file_size as fileSize, 
+		   to_char(reg_date,'yyyy-mm-dd hh:mi:ss') as regDate, 
+		   users_no as userNo 
+		   from gallery
+order by regDate desc
+]]>	
+</select>
+
+<insert id="insert" parameterType="galleryvo">
+<![CDATA[
+insert into gallery values(gallery_seq.nextval, #{orgFileName },
+												#{saveFileName },
+												#{comments }, 
+												#{extName }, 
+												#{fileSize }, 
+												sysdate, 
+												#{userNo })
+]]>
+</insert>
+
+
+<delete id="delete" parameterType="galleryvo">
+<![CDATA[
+insert into gallery values(gallery_seq.nextval, #{orgFileName },
+												#{saveFileName },
+												#{comments }, 
+												#{extName }, 
+												#{fileSize }, 
+												sysdate, 
+												#{userNo })
+]]>
+</delete>
+
+</mapper>

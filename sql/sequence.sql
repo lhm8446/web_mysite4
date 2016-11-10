@@ -22,3 +22,11 @@ create sequence board_seq
 start WITH 1 
 increment by 1
 maxvalue 9999999999;
+
+
+drop sequence gallery_seq;
+
+create sequence gallery_seq
+start WITH 1 
+increment by 1
+maxvalue 9999999999;

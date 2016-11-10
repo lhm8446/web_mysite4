@@ -5,12 +5,14 @@
 	
 		<typeAlias alias="uservo" type="com.bit2016.mysite.vo.UserVo"/>
 		<typeAlias alias="guestbookvo" type="com.bit2016.mysite.vo.GuestBookVo"/>
+		<typeAlias alias="galleryvo" type="com.bit2016.mysite.vo.GalleryVo"/>
 		
     </typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/guestbook.xml" />
 		<!--   <mapper resource="mybatis/mappers/board.xml" />       -->
+		<mapper resource="mybatis/mappers/gallery.xml" />
 		
 	</mappers>
 	

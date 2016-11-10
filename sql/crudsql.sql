@@ -1,4 +1,4 @@
--- *******users*******
+-- *****************************************************************************************  users*******
 -- insert
 insert INTO USERS VALUES(user_seq.nextval , '이하민', 'lhm8446@gmail.com', '1234', 'male');
 
@@ -16,14 +16,14 @@ update users set name = '이하민',password = '1234',gender = 'male' where no =
 
 commit;
 
--- ******* guestbook ******
+-- ******************************************************************************************* guestbook ******
 
 insert into guestbook values(guestbook_SEQ.nextval,'이하민','안녕','1234',sysdate);
 select * from guestbook;
 
 delete from guestbook where no=2;
 
--- *******board*******
+-- ******************************************************************************************* board*******
 
 delete from board;
 
@@ -65,4 +65,14 @@ insert into board values(board_seq.nextval, '답글1', '냉무', sysdate, 0, 2, 
 																	   2,  --부모글 순서 +1 
 																	   1,  --부모글 깊이 +1
 																	   1);
+																	   
+																	   
+-- ******************************************************************************************* gallery*******
+delete from gallery where no = 7;
 
+select * from gallery;
+commit;
+select no, org_file_name, save_file_name, comments, ext_name , file_size, to_char(reg_date,'yyyy-mm-dd hh:mi:ss') as regDate, users_no from gallery
+order by regDate desc;
+
+insert into gallery values(gallery_seq.nextval, '1', '1', '1', 'jpg', '5', sysdate, '2'); 
