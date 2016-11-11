@@ -9,7 +9,7 @@
 select no, 
 		name,
 		content, 
-		password, 
+		password,
 		to_char(reg_date, 'yyyy-mm-dd hh:mi:ss') as reg_date
 		from guestbook 
 		order by reg_date desc
