@@ -146,7 +146,7 @@ public class BoardDao {
 		}
 	}
 
-	public int getTotalCount( String keyword ) {
+	public int getTotalCount() {
 		int totalCount = 0;
 
 		Connection conn = null;
@@ -155,19 +155,8 @@ public class BoardDao {
 		
 		try {
 			conn = getConnection();
-			if( "".equals( keyword ) ) {
 				String sql = "select count(*) from board";
 				pstmt = conn.prepareStatement(sql);
-			} else { 
-				String sql =
-					"select count(*)" +
-					"  from board" +
-					" where title like ? or content like ?";
-				pstmt = conn.prepareStatement(sql);
-				
-				pstmt.setString(1, "%" + keyword + "%");
-				pstmt.setString(2, "%" + keyword + "%");
-			}
 			rs = pstmt.executeQuery();
 			if( rs.next() ) {
 				totalCount = rs.getInt( 1 );
