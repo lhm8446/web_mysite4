@@ -10,20 +10,21 @@
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
 	<mvc:annotation-driven>
-	
+
 		<mvc:message-converters>
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
-					<value>text/html; charset=UTF-8</value>
+						<value>text/html; charset=UTF-8</value>
 					</list>
 				</property>
 			</bean>
 
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
-					<value>application/json; charset=UTF-8</value>
+						<value>application/json; charset=UTF-8</value>
 					</list>
 				</property>
 			</bean>
@@ -31,18 +32,17 @@
 
 		<!-- argument resolver -->
 		<mvc:argument-resolvers>
-			<bean
-				class="com.bit2016.security.AuthUserHandlerMethodArgumentResolver" />
+			<bean class="com.bit2016.security.AuthUserHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
-		
+
 	</mvc:annotation-driven>
-	
+
 	<!-- the mvc resources tag does the magic -->
- 	<mvc:resources mapping="/gallery/assets/**" location="file:/upload/" />
- 	
+	<mvc:resources mapping="/gallery/assets/**" location="file:/upload/" />
+
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 햔들러 -->
 	<mvc:default-servlet-handler />
-	
+
 	<!-- annotation 설정을 하겠다. -->
 	<context:annotation-config />
 
@@ -59,22 +59,22 @@
 		<property name="suffix" value=".jsp" />
 		<property name="order" value="1" />
 	</bean>
-	
-	<!-- 멀티파트 리졸버 -->
-	<bean id="multipartResolver" 
-       class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-       
-      <!-- 최대업로드 가능한 바이트크기 -->
-      <property name="maxUploadSize" value="52428800" />
-    
-      <!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
-     <!-- property name="maxInMemorySize" value="52428800" /-->
 
-     <!-- defaultEncoding -->
-     <property name="defaultEncoding" value="utf-8" />
+	<!-- 멀티파트 리졸버 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+		<!-- 최대업로드 가능한 바이트크기 -->
+		<property name="maxUploadSize" value="52428800" />
+
+		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
+		<!-- property name="maxInMemorySize" value="52428800" / -->
+
+		<!-- defaultEncoding -->
+		<property name="defaultEncoding" value="utf-8" />
 	</bean>
-	
-	
+
+
 	<!-- Interceptors -->
 	<mvc:interceptors>
 
@@ -101,5 +101,15 @@
 
 	</mvc:interceptors>
 
+	<!-- 6. MessageSource -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="basenames">
+			<list>
+				<value>messages/messages_ko</value>
+			</list>
+		</property>
+	</bean>
 
 </beans>
