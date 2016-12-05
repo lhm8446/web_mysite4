@@ -225,7 +225,7 @@
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
 					<url>http://127.0.0.1:8888/manager/text</url>
-					<path>/mysite4</path>
+					<path>/web_mysite4</path>
 					<username>tomcat</username>
 					<password>tomcat</password>
 				</configuration>
