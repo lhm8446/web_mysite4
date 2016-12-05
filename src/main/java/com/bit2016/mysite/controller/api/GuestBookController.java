@@ -32,5 +32,6 @@ public class GuestBookController {
 		map.put("data", list);
 		
 		return map;
+		
 	}	
 }
