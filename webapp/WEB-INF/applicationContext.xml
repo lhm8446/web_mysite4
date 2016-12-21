@@ -35,8 +35,8 @@
 	<bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource"
 		destroy-method="close">
 		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="user" value="webdb" />
-		<property name="password" value="webdb" />
+		<property name="user" value="bitdb" />
+		<property name="password" value="bitdb" />
 		<property name="connectionCachingEnabled" value="true" />
 		<qualifier value="main-db" />
 	</bean>

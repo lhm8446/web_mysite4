@@ -1,14 +1,18 @@
 package com.bit2016.mysite.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bit2016.dto.JSONResult;
 import com.bit2016.mysite.service.GalleryService;
 import com.bit2016.mysite.vo.GalleryVo;
 import com.bit2016.mysite.vo.UserVo;
@@ -21,6 +25,14 @@ public class GalleryController {
 	
 	@Autowired
 	private GalleryService galleryService;
+	
+	@ResponseBody
+	@RequestMapping("/api")
+	public JSONResult json(){
+		List<GalleryVo> list = galleryService.getList();
+
+		return JSONResult.success(list);
+	}
 	
 	@RequestMapping("")
 	public String index(Model model){

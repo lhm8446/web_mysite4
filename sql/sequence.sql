@@ -1,12 +1,12 @@
 -- sequence 
 
-
 drop sequence USER_SEQ;
 
 create sequence user_seq
 start WITH 1 
 increment by 1
 maxvalue 9999999999;
+
 
 drop sequence guestbook_SEQ;
 
